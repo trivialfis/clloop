@@ -25,22 +25,26 @@ int main()
     {
       x[i] = (float)i;
     }
-
+  // Declare arguments. The order is important.
   kernel.in("x");
   kernel.out("y");
-
+  // Set their values, the order is arbitray.
+  // Here we set an array `x', with it's size `SIZE'.
   kernel.set("x", x, SIZE);
   kernel.set("y", y, SIZE);
 
+  // Ok, now we apply the kernel, `true' means we want to retrieve those "out" arguments.
   kernel.apply(SIZE, true);
-  // std::cout << std::endl;
+  // You can also retrieve it by name.
   kernel.retrieve("y");
   for (size_t i = 0; i < SIZE; ++i)
     {
-      // std::cout << "x[" << i << "]:" << x[i] << " y[" << i << "]:" << y[i] << std::endl;
       assert(x[i] * 2 - y[i] < 0.001);
     }
 
+
+  // This one tests vector, unlike array, size is not needed.
+  // And we can reuse the previous array argument, which is `x' and `y'.
   std::vector<float> v (SIZE), w (SIZE);
   std::iota (v.begin(), v.end(), 0);
   for (size_t i = 0; i < 1000; ++i)
@@ -55,6 +59,7 @@ int main()
       assert(x[i] * 2 - y[i] < 0.001);
     }
 
+  // Vector of structs.
   CLKernel kernel_struct = wrapper.eval("test_struct_copy.cl", "struct_copy");
   std::vector<dummy> structs_a (SIZE), structs_b (SIZE);
 
@@ -76,6 +81,7 @@ int main()
       assert(structs_a[i].j == structs_b[i].j);
     }
 
+  // Test pointer walk.
   CLKernel ptr_kernel = wrapper.eval("test_pointer.cl", "walk");
 
   ptr_kernel.out("x");

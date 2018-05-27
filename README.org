@@ -1,0 +1,12 @@
+#+TITLE: A simple C++ wrapper for OpenCL.
+
+* Introduction
+
+Basically anyone who writes OpenCL needs some kind of wrappers, here is mine.
+
+/clloop/ is a simple C++ header only wrapper for OpenCL. It supports scalar
+types, array, vector, struct and vector of structs.
+
+* Examples
+Just check out "./tests/testwrapper.cc". It's a file less than 100 lines but contains
+above usage.
