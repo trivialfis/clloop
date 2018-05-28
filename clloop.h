@@ -21,7 +21,6 @@
 #include <vector>
 #include <map>
 #include <stdexcept>
-#include <iostream>
 
 namespace clloop
 {
@@ -246,9 +245,9 @@ public:
     arg_properties arg = arguments[name];
     if (arg.flag != CL_MEM_WRITE_ONLY && arg.flag != CL_MEM_READ_WRITE)
       {
-	std::cerr << name << " is not supposed to be written by kernel,"
-	  " why retrieving it?" << std::endl;
-	std::cerr << "flag: " << arg.flag << " wo: " << CL_MEM_WRITE_ONLY << " rw: " << CL_MEM_READ_WRITE << std::endl;
+	fprintf(stderr, "%s is not supposed to be written by kernel,"
+		" why retrieving it?\n", name.c_str());
+	fprintf(stderr, "flag: %lu", arg.flag);
       }
 
     size_t index = arg.index;
@@ -481,7 +480,7 @@ public:
 
     program = clCreateProgramWithSource(context, 1, (const char **)&kernel_src,
 					NULL, &cl_err);
-    if (clBuildProgram(program, 0, NULL, "-cl-opt-disable", NULL, NULL) != CL_SUCCESS)
+    if (clBuildProgram(program, 0, NULL, NULL, NULL, NULL) != CL_SUCCESS)
       {
 	printf("Error building program\n");
 	char buffer[BUILD_LOG_SIZE];
