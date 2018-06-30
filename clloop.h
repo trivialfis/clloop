@@ -391,19 +391,20 @@ public:
     return command_queue;
   }
 
-  void apply(size_t gs, size_t ls=0, bool ret = false)
+  void apply(size_t global_size, size_t local_size = 0, bool ret = false)
   {
-    if (ls != 0)
+    if (local_size != 0)
       {
-	clEnqueueNDRangeKernel(command_queue, kernel, 1, NULL, &gs, &ls, 0,
-			       NULL, NULL);
+	clEnqueueNDRangeKernel
+          (command_queue, kernel, 1, NULL, &global_size, &local_size, 0, NULL,
+           NULL);
       }
     else
       {
-	clEnqueueNDRangeKernel(command_queue, kernel, 1, NULL, &gs, NULL, 0,
-			       NULL, NULL);
+	clEnqueueNDRangeKernel
+          (command_queue, kernel, 1, NULL, &global_size, NULL, 0, NULL, NULL);
       }
-    // if (ret)
+    if (ret)
       retrieve();
     clFinish(command_queue);
   }

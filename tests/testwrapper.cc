@@ -34,7 +34,7 @@ int main()
   kernel.set("y", y, SIZE);
 
   // Ok, now we apply the kernel, `true' means we want to retrieve those "out" arguments.
-  kernel.apply(SIZE, true);
+  kernel.apply(SIZE, 0, true);
   // You can also retrieve it by name.
   kernel.retrieve("y");
   for (size_t i = 0; i < SIZE; ++i)
@@ -52,7 +52,7 @@ int main()
       kernel.set("x", v);
       kernel.set("y", w);
 
-      kernel.apply(SIZE, true);
+      kernel.apply(SIZE, 0, true);
     }
   for (size_t i = 0; i < SIZE; ++i)
     {
@@ -73,7 +73,7 @@ int main()
   kernel_struct.set("x", structs_a);
   kernel_struct.set("y", structs_b);
 
-  kernel_struct.apply(SIZE, true);
+  kernel_struct.apply(SIZE, 0, true);
 
   for (size_t i = 0; i < SIZE; ++i)
     {
@@ -90,7 +90,7 @@ int main()
   ptr_kernel.set("x", structs_a);
   ptr_kernel.set("s", SIZE);
 
-  ptr_kernel.apply(SIZE, true);
+  ptr_kernel.apply(SIZE, 0, true);
 
   for (size_t i = 0; i < SIZE; ++i)
     {
